@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+      <page fileid='' uniqueid='8' languageid='1' visiblecontent='1'>
+	  <title><![CDATA[Landscape]]></title>
+	  <format><![CDATA[]]></format>
+	  <extraFields></extraFields>
+  	
+	<sections>
+	                	    <section uniqueid='4' pageid='8'>	    
+	      <title><![CDATA[]]></title>
+	      <date><![CDATA[0000-00-00]]></date>
+	      <content><![CDATA[]]></content>
+	      	      <type><![CDATA[gallery]]></type>
+	      <format><![CDATA[]]></format>
+	      <files>
+	        	        	          	     		   <file uniqueid='42' width='1920' height='1280'>
+	            <description><![CDATA[]]></description>
+	            <mimetype><![CDATA[image/pjpeg]]></mimetype>
+	            <imglink><![CDATA[]]></imglink>  
+	            <extraFields></extraFields>  
+</file>	        	          	     		   <file uniqueid='43' width='1920' height='1280'>
+	            <description><![CDATA[]]></description>
+	            <mimetype><![CDATA[image/pjpeg]]></mimetype>
+	            <imglink><![CDATA[]]></imglink>  
+	            <extraFields></extraFields>  
+</file>	        	          	     		   <file uniqueid='44' width='1920' height='1280'>
+	            <description><![CDATA[]]></description>
+	            <mimetype><![CDATA[image/pjpeg]]></mimetype>
+	            <imglink><![CDATA[]]></imglink>  
+	            <extraFields></extraFields>  
+</file>	        	          	     		   <file uniqueid='45' width='1920' height='1280'>
+	            <description><![CDATA[]]></description>
+	            <mimetype><![CDATA[image/pjpeg]]></mimetype>
+	            <imglink><![CDATA[]]></imglink>  
+	            <extraFields></extraFields>  
+</file>	        	      </files>	  
+	      <extraFields></extraFields> 
+	    </section>
+	  	
+		</sections>	 
+</page>

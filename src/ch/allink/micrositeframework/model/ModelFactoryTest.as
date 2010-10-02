@@ -4,6 +4,9 @@ package ch.allink.micrositeframework.model
 	import ch.allink.micrositeframework.cmsmodel.Navigation;
 	import ch.allink.micrositeframework.cmsmodel.Page;
 	import ch.allink.micrositeframework.cmsmodel.Section;
+	import ch.allink.micrositeframework.net.ModelFactory;
+	import ch.allink.micrositeframework.net.ModelRequest;
+	import ch.allink.micrositeframework.net.ResultEvent;
 	
 	import flash.net.URLLoader;
 	
@@ -12,22 +15,23 @@ package ch.allink.micrositeframework.model
 	
 	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.async.Async;
+	import org.flexunit.internals.namespaces.classInternal;
 	
 	
 	public class ModelFactoryTest
 	{
-		private var mf:ModelFactory
+		private var modelFactory:ModelFactory
 		
 		[Before(order=1)]
 		public function before():void
 		{   
-			mf = new ModelFactory()  
+			modelFactory = new ModelFactory()  
 		}   
 		
 		[After]  
 		public function runAfterEveryTest():void
 		{   
-			mf = null 
+			modelFactory = null 
 		} 
 		
 		[Test]  
@@ -40,7 +44,7 @@ package ch.allink.micrositeframework.model
 											<imglink>link</imglink>
 											<extraFields/>
 										</file>
-			var image:Image = Image(mf.create(Image, xml))
+			var image:Image = Image(modelFactory.create(Image, xml))
 			Assert.assertEquals(42, image.uniqueid)
 			Assert.assertEquals(1920, image.width)
 			Assert.assertEquals(1280, image.height)
@@ -93,7 +97,7 @@ package ch.allink.micrositeframework.model
 								</sections>
 						</page>	
 			
-			var p:Page = Page(mf.create(Page, xml))
+			var p:Page = Page(modelFactory.create(Page, xml))
 			Assert.assertEquals('', p.fileid)
 			Assert.assertEquals(8, p.uniqueid)
 			Assert.assertEquals(1, p.languageid)
@@ -107,15 +111,18 @@ package ch.allink.micrositeframework.model
 		[Test(async,timeout='3000')]
 		public function testLoadOfPageXML():void
 		{
-			mf.loadModelFromURL(Page, "./page.xml")
-			Async.handleEvent(this, mf, ModelEvent.MODEL_LOADED, onXMLLoaded)
+			modelFactory = new ModelFactory
+			var request:ModelRequest = modelFactory.load(Page, "./page.xml", ModelFactory.TYPE_MODEL)
+			Async.handleEvent(this, request, ResultEvent.DATA_LOADED, onXMLLoaded)
+		//	request.addEventListener(ResultEvent.COLLECTION_LOADED, modelFactory_modelLoadedHandler)
+		//	Async.handleEvent(this, mf, ResultEvent.MODEL_LOADED, onXMLLoaded)
 		}
 		
-		private function onXMLLoaded(event:ModelEvent, param2:*):void
+		private function onXMLLoaded(event:ResultEvent, param2:*):void
 		{
 			var p:Page = Page(event.model)
 			Assert.assertEquals('Landscape', p.title)
-			Assert.assertEquals(event.klass, Page)
+			Assert.assertEquals(Page, event.request.klass)
 		}
 		
 		[Test]
@@ -129,7 +136,7 @@ package ch.allink.micrositeframework.model
 							<pages>1,</pages>
 							</rubric>
 							</rubrics>
-			var collection:Vector.<AbstractModel> = mf.createCollection(Navigation, xml);
+			var collection:Vector.<AbstractModel> = modelFactory.createCollection(Navigation, xml);
 			var navigation:Navigation = Navigation(collection[0])
 			Assert.assertEquals(1, collection.length)
 			Assert.assertEquals('Test', navigation.title)

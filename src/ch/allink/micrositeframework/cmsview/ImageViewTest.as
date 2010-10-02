@@ -31,7 +31,7 @@ public class ImageViewTest
 	[Test]
 	public function testImageOptionsSimple():void
 	{
-		imageView.build()		
+		//imageView.build()		
 		Assert.assertEquals("./cached/1_200.jpg", imageView.fileURL)
 	}
 	
@@ -40,7 +40,7 @@ public class ImageViewTest
 	{	
 		imageView.model = image
 		imageView.imageOptions.blackAndWhite = true
-		imageView.build()
+	//	imageView.build()
 		Assert.assertEquals("./cached/1_200_gray.jpg", imageView.fileURL)
 	}
 }

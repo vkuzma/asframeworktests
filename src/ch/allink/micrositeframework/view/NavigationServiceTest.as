@@ -2,8 +2,6 @@ package ch.allink.micrositeframework.view
 {
 import ch.allink.micrositeframework.cmsmodel.Navigation;
 import ch.allink.micrositeframework.cmsmodel.NavigationService;
-import ch.allink.micrositeframework.model.ModelEvent;
-
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.utils.Timer;

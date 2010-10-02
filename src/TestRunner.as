@@ -2,6 +2,7 @@ package
 {
 	import ch.allink.micrositeframework.cmsview.ImageViewTest;
 	import ch.allink.micrositeframework.model.ModelFactoryTest;
+	import ch.allink.micrositeframework.view.NavigationServiceTest;
 	
 	import flash.display.Sprite;
 	
@@ -15,13 +16,13 @@ package
 		
 		public function TestRunner()
 		{
-			super();
+			super()
 			
 			core = new FlexUnitCore()
 			core.addListener( new TraceListener() )
 			core.run(ModelFactoryTest)
 			core.run(ImageViewTest)
-			
+			core.run( NavigationServiceTest )
 		}
 	}
 }

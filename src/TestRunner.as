@@ -22,7 +22,7 @@ package
 			core.addListener( new TraceListener() )
 			core.run(ModelFactoryTest)
 			core.run(ImageViewTest)
-			core.run( NavigationServiceTest )
+			core.run(NavigationServiceTest)
 		}
 	}
 }

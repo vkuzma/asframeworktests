@@ -112,7 +112,7 @@ package ch.allink.micrositeframework.model
 		public function testLoadOfPageXML():void
 		{
 			modelFactory = new ModelFactory
-			var request:ModelRequest = modelFactory.load(Page, "./page.xml", ModelFactory.TYPE_MODEL)
+			var request:ModelRequest = modelFactory.load(Page, "./testdata/page.xml", ModelFactory.TYPE_MODEL)
 			Async.handleEvent(this, request, ResultEvent.DATA_LOADED, onXMLLoaded)
 		//	request.addEventListener(ResultEvent.COLLECTION_LOADED, modelFactory_modelLoadedHandler)
 		//	Async.handleEvent(this, mf, ResultEvent.MODEL_LOADED, onXMLLoaded)

@@ -93,8 +93,8 @@ public class NavigationServiceTest
 	[Test]
 	public function compareTargetActualID():void
 	{
-		assertEquals(navigationService.navigationByPageID(2).id,
-					 testNavigationView_3.navigation.id)
+		assertEquals(navigationService.navigationByPageID(2).navigationid,
+					 testNavigationView_3.navigation.navigationid)
 //		assertEquals(navigationService.navigationForID(10).id,
 //					 testNavigationView_11.navigation.id)
 		
@@ -144,7 +144,6 @@ public class NavigationServiceTest
 	{
 //		var navigationViewService:NavigationViewService = event.target as NavigationViewService
 //		trace("pageID "+navigationViewService.pageID)
-					 
 	}
 	
 	//---------------------------------
@@ -334,7 +333,7 @@ public class NavigationServiceTest
 		for(var i:int = 0; i < numCollection; i++)
 		{
 			var navigation:Navigation = new Navigation()
-			navigation.id = idPrefix + i
+			navigation.navigationid = idPrefix + i
 			var navigationView:NavigationView = new NavigationView(navigation)
 			navigationView.activeColor = activeColor
 			navigationView.defaultColor = defaultColor

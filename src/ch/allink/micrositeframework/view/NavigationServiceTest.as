@@ -2,7 +2,6 @@ package ch.allink.micrositeframework.view
 {
 import ch.allink.micrositeframework.cmsmodel.Navigation;
 import ch.allink.micrositeframework.cmsmodel.NavigationViewService;
-import ch.allink.micrositeframework.net.NavigationViewEvent;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -53,27 +52,27 @@ public class NavigationServiceTest
 	//
 	//-------------------------------------------------------------------------
 	
-//	[Test]
-//	public function mouseInputClickRollOverRollOut():void
-//	{
-//		testNavigationView_1.addEventListener(MouseEvent.CLICK,
-//											testNavigationView_1_clickHandler)
-//		
-//		testNavigationView_2.addEventListener(MouseEvent.CLICK,
-//											  testNavigationView_2_clickHandler)
-//		testNavigationView_2.addEventListener(MouseEvent.ROLL_OVER,
-//										  testNavigationView_4_rollOverHandlerr)
-//		testNavigationView_2.addEventListener(MouseEvent.ROLL_OUT,
-//											testNavigationView_4_rollOutHandler)
-//			
-//
-//		testNavigationView_3.addEventListener(MouseEvent.ROLL_OVER,
-//										   testNavigationView_3_rollOverHandler)
-//		testNavigationView_3.addEventListener(MouseEvent.ROLL_OUT,
-//										   testNavigationView_3_rollOutHandler)
-//			
-//		testNavigationView_1.dispatchEvent(new MouseEvent(MouseEvent.CLICK))
-//	}
+	[Test]
+	public function mouseInputClickRollOverRollOut():void
+	{
+		testNavigationView_1.addEventListener(MouseEvent.CLICK,
+											testNavigationView_1_clickHandler)
+		
+		testNavigationView_2.addEventListener(MouseEvent.CLICK,
+											  testNavigationView_2_clickHandler)
+		testNavigationView_2.addEventListener(MouseEvent.ROLL_OVER,
+										  testNavigationView_4_rollOverHandlerr)
+		testNavigationView_2.addEventListener(MouseEvent.ROLL_OUT,
+											testNavigationView_4_rollOutHandler)
+			
+
+		testNavigationView_3.addEventListener(MouseEvent.ROLL_OVER,
+										   testNavigationView_3_rollOverHandler)
+		testNavigationView_3.addEventListener(MouseEvent.ROLL_OUT,
+										   testNavigationView_3_rollOutHandler)
+			
+		testNavigationView_1.dispatchEvent(new MouseEvent(MouseEvent.CLICK))
+	}
 	
 	[Test]
 	public function mouseInputClickSubMenus():void
@@ -94,8 +93,8 @@ public class NavigationServiceTest
 	[Test]
 	public function compareTargetActualID():void
 	{
-		assertEquals(navigationService.navigationByPageID(2).navigationid,
-					 Navigation(testNavigationView_3.model).navigationid)
+//		assertEquals(navigationService.navigationByPageID(2).navigationid,
+//					 Navigation(testNavigationView_3.model).navigationid)
 //		assertEquals(navigationService.navigationForID(10).id,
 //					 testNavigationView_11.navigation.id)
 		
@@ -141,10 +140,10 @@ public class NavigationServiceTest
 		executeDelay(timerRollOut_4_completeHandler, tweeningTime * 1000)
 	}
 	
-	private function navigationService_navigationClickedHandler(event:MouseEvent):void
+	private function navigationService_navigationClickedHandler(event:Event):void
 	{
-		//var navigationViewService:NavigationViewService = event.currentTarget as NavigationViewService
-		//trace("pageID "+navigationViewService.pageID)
+//		var navigationViewService:NavigationViewService = event.target as NavigationViewService
+//		trace("pageID "+navigationViewService.pageID)
 	}
 	
 	//---------------------------------
@@ -277,8 +276,6 @@ public class NavigationServiceTest
 		assertTrue(testNavigationView_21.active)
 		
 		testNavigationView_112.dispatchEvent(new MouseEvent(MouseEvent.CLICK))
-//		testNavigationView_3.dispatchEvent(new MouseEvent(MouseEvent.CLICK))
-
 	}
 	
 	private function timerClicked_112_completeHandler(event:TimerEvent):void
@@ -289,7 +286,7 @@ public class NavigationServiceTest
 //		assertEquals(activeColor, testNavigationView_112.textField.textColor)
 //		assertEquals(defaultColor, testNavigationView_2.textField.textColor)
 //		assertEquals(defaultColor, testNavigationView_21.textField.textColor)
-//		assertTrue(testNavigationView_1.active)
+		assertTrue(testNavigationView_1.active)
 		assertTrue(testNavigationView_11.active)
 		assertTrue(testNavigationView_112.active)
 		assertFalse(testNavigationView_2.active)
@@ -358,7 +355,7 @@ public class NavigationServiceTest
 	public function setUp():void
 	{
 		navigationService = new NavigationViewService()
-		navigationService.addEventListener(MouseEvent.CLICK,
+		navigationService.addEventListener(NavigationViewService.NAVIGATION_CLICKED,
 			navigationService_navigationClickedHandler)
 			
 		var collection:Vector.<NavigationView> = buildCollection(3, 0)

@@ -1,6 +1,7 @@
 package ch.allink.micrositeframework.view
 {
 import ch.allink.micrositeframework.cmsmodel.Navigation;
+import ch.allink.micrositeframework.cmsmodel.NavigationViewEvent;
 import ch.allink.micrositeframework.cmsmodel.NavigationViewService;
 
 import flash.events.Event;
@@ -142,8 +143,7 @@ public class NavigationServiceTest
 	
 	private function navigationService_navigationClickedHandler(event:Event):void
 	{
-//		var navigationViewService:NavigationViewService = event.target as NavigationViewService
-//		trace("pageID "+navigationViewService.pageID)
+		trace(navigationService.pageID)
 	}
 	
 	//---------------------------------
@@ -355,7 +355,7 @@ public class NavigationServiceTest
 	public function setUp():void
 	{
 		navigationService = new NavigationViewService()
-		navigationService.addEventListener(NavigationViewService.NAVIGATION_CLICKED,
+		navigationService.addEventListener(NavigationViewEvent.NAVIGATION_CLICK,
 			navigationService_navigationClickedHandler)
 			
 		var collection:Vector.<NavigationView> = buildCollection(3, 0)

@@ -141,9 +141,10 @@ public class NavigationServiceTest
 		executeDelay(timerRollOut_4_completeHandler, tweeningTime * 1000)
 	}
 	
-	private function navigationService_navigationClickedHandler(event:Event):void
+	private function navigationService_navigationClickedHandler(
+		event:NavigationViewEvent):void
 	{
-		trace(navigationService.pageID)
+//		trace(Navigation(event.navigationView.model).navigationid+" == "+navigationService.pageID)
 	}
 	
 	//---------------------------------

@@ -1,8 +1,9 @@
 package ch.allink.micrositeframework.view
 {
-import ch.allink.micrositeframework.cmsmodel.Navigation;
-import ch.allink.micrositeframework.cmsmodel.NavigationViewEvent;
-import ch.allink.micrositeframework.cmsmodel.NavigationViewService;
+import ch.allink.microsite.navigationElement.Navigation;
+import ch.allink.microsite.navigationElement.NavigationView;
+import ch.allink.microsite.navigationElement.NavigationTreeView;
+import ch.allink.microsite.events.NavigationViewEvent;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -32,7 +33,7 @@ public class NavigationServiceTest
 	//
 	//-------------------------------------------------------------------------
 
-	private var navigationService:NavigationViewService 
+	private var navigationService:NavigationTreeView 
 	private var tweeningTime:Number = 0.1
 	private var defaultColor:uint = 0x0000FF
 	private var activeColor:uint = 0x00FF00
@@ -355,7 +356,7 @@ public class NavigationServiceTest
 	[Before]
 	public function setUp():void
 	{
-		navigationService = new NavigationViewService()
+		navigationService = new NavigationTreeView()
 		navigationService.addEventListener(NavigationViewEvent.NAVIGATION_CLICK,
 			navigationService_navigationClickedHandler)
 			
@@ -367,28 +368,28 @@ public class NavigationServiceTest
 		//Hauptnavigation
 		navigationService.navigationViews = collection
 		//Unternavigation 0
-		collection[0].navigationService = new NavigationViewService()
-		collection[0].navigationService.navigationViews = collection_0
+		collection[0].navigationTreeView = new NavigationTreeView()
+		collection[0].navigationTreeView.navigationViews = collection_0
 		//Unternavigation 1
-		collection[1].navigationService = new NavigationViewService()
-		collection[1].navigationService.navigationViews = collection_1
+		collection[1].navigationTreeView = new NavigationTreeView()
+		collection[1].navigationTreeView.navigationViews = collection_1
 		//Unternavigation 00
-		collection[0].navigationService.navigationViews[0].
-			navigationService = new NavigationViewService()
-		collection[0].navigationService.navigationViews[0].
-			navigationService.navigationViews = collection_00
+		collection[0].navigationTreeView.navigationViews[0].
+			navigationTreeView = new NavigationTreeView()
+		collection[0].navigationTreeView.navigationViews[0].
+			navigationTreeView.navigationViews = collection_00
 			
 		testNavigationView_1 = navigationService.navigationViews[0]
 		testNavigationView_2 = navigationService.navigationViews[1]
 		testNavigationView_3 = navigationService.navigationViews[2]
 			
-		testNavigationView_11 = testNavigationView_1.navigationService.navigationViews[0]
-		testNavigationView_12 = testNavigationView_1.navigationService.navigationViews[1]
-		testNavigationView_21 = testNavigationView_2.navigationService.navigationViews[0]
-		testNavigationView_22 = testNavigationView_2.navigationService.navigationViews[1]
+		testNavigationView_11 = testNavigationView_1.navigationTreeView.navigationViews[0]
+		testNavigationView_12 = testNavigationView_1.navigationTreeView.navigationViews[1]
+		testNavigationView_21 = testNavigationView_2.navigationTreeView.navigationViews[0]
+		testNavigationView_22 = testNavigationView_2.navigationTreeView.navigationViews[1]
 			
-		testNavigationView_111 = testNavigationView_11.navigationService.navigationViews[0]
-		testNavigationView_112 = testNavigationView_11.navigationService.navigationViews[1]
+		testNavigationView_111 = testNavigationView_11.navigationTreeView.navigationViews[0]
+		testNavigationView_112 = testNavigationView_11.navigationTreeView.navigationViews[1]
 	}
 	
 //	[Before]

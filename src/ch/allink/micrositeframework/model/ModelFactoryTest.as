@@ -1,21 +1,17 @@
 package ch.allink.micrositeframework.model
 {
-	import ch.allink.micrositeframework.cmsmodel.Image;
-	import ch.allink.micrositeframework.cmsmodel.Navigation;
-	import ch.allink.micrositeframework.cmsmodel.Page;
-	import ch.allink.micrositeframework.cmsmodel.Section;
-	import ch.allink.micrositeframework.net.ModelFactory;
-	import ch.allink.micrositeframework.net.ModelRequest;
-	import ch.allink.micrositeframework.net.ResultEvent;
-	
-	import flash.net.URLLoader;
+	import ch.allink.microsite.cmsConnector.ModelFactory;
+	import ch.allink.microsite.cmsConnector.ModelRequest;
+	import ch.allink.microsite.core.AbstractModel;
+	import ch.allink.microsite.imageElement.Image;
+	import ch.allink.microsite.navigationElement.Navigation;
+	import ch.allink.microsite.pageElement.Page;
+	import ch.allink.microsite.sectionElement.sectionType.Section;
+	import ch.allink.microsite.events.ResultEvent;
 	
 	import flexunit.framework.Assert;
-	import flexunit.framework.TestCase;
 	
-	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.async.Async;
-	import org.flexunit.internals.namespaces.classInternal;
 	
 	
 	public class ModelFactoryTest
@@ -113,6 +109,16 @@ package ch.allink.micrositeframework.model
 		{
 			modelFactory = new ModelFactory
 			var request:ModelRequest = modelFactory.load(Page, "./testdata/page.xml", ModelFactory.TYPE_MODEL)
+			Async.handleEvent(this, request, ResultEvent.DATA_LOADED, onXMLLoaded)
+		//	request.addEventListener(ResultEvent.COLLECTION_LOADED, modelFactory_modelLoadedHandler)
+		//	Async.handleEvent(this, mf, ResultEvent.MODEL_LOADED, onXMLLoaded)
+		}
+		
+		[Test(async,timeout='3000')]
+		public function testLoadOfPage2XML():void
+		{
+			modelFactory = new ModelFactory
+			var request:ModelRequest = modelFactory.load(Page, "./testdata/page2.xml", ModelFactory.TYPE_MODEL)
 			Async.handleEvent(this, request, ResultEvent.DATA_LOADED, onXMLLoaded)
 		//	request.addEventListener(ResultEvent.COLLECTION_LOADED, modelFactory_modelLoadedHandler)
 		//	Async.handleEvent(this, mf, ResultEvent.MODEL_LOADED, onXMLLoaded)

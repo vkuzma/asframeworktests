@@ -1,28 +1,38 @@
 package
 {
-	import ch.allink.micrositeframework.cmsview.ImageViewTest;
-	import ch.allink.micrositeframework.model.ModelFactoryTest;
-	import ch.allink.micrositeframework.view.NavigationServiceTest;
+import ch.allink.micrositeframework.stateMachine.StateMachineTest;
+
+import flash.display.Sprite;
+
+import org.flexunit.internals.TraceListener;
+import org.flexunit.runner.FlexUnitCore;
+
+public class TestRunner extends Sprite
+{
+	//-------------------------------------------------------------------------
+	//
+	//	Variables
+	//
+	//-------------------------------------------------------------------------
 	
-	import flash.display.Sprite;
+	private var core:FlexUnitCore
 	
-	import org.flexunit.internals.TraceListener;
-	import org.flexunit.runner.FlexUnitCore;
+	//-------------------------------------------------------------------------
+	//
+	//	Constructor
+	//
+	//-------------------------------------------------------------------------
 	
-	public class TestRunner extends Sprite
+	public function TestRunner()
 	{
-		private var core:FlexUnitCore
+		super()
 		
-		
-		public function TestRunner()
-		{
-			super()
-			
-			core = new FlexUnitCore()
-			core.addListener( new TraceListener() )
-			core.run(ModelFactoryTest)
-			core.run(ImageViewTest)
-			core.run(NavigationServiceTest)
-		}
+		core = new FlexUnitCore()
+		core.addListener(new TraceListener())
+		core.run(StateMachineTest)
+//			core.run(ModelFactoryTest)
+//			core.run(ImageViewTest)
+//			core.run(NavigationServiceTest)
 	}
+}
 }

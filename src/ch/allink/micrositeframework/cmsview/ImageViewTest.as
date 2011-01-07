@@ -1,6 +1,8 @@
 package ch.allink.micrositeframework.cmsview
 {
-	import ch.allink.micrositeframework.cmsmodel.Image;
+	
+	import ch.allink.microsite.imageElement.Image;
+	import ch.allink.microsite.imageElement.ImageView;
 	
 	import flash.display.Bitmap;
 	import flash.events.Event;

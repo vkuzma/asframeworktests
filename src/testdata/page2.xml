@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page fileid="8" uniqueid="1" languageid="1" visiblecontent="1">
+    <title><![CDATA[Landscape]]></title>
+    <format><![CDATA[]]></format>
+    <extraFields/>
+    <sections>
+        <section uniqueid="2" pageid="1">
+            <title><![CDATA[test]]></title>
+            <date><![CDATA[0000-00-00]]></date>
+            <content><![CDATA[Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.]]></content>
+            <type><![CDATA[textonly]]></type>
+            <format><![CDATA[fehler]]></format>
+            <files>         
+            </files>
+            <extraFields/>
+        </section>
+    </sections>
+</page>

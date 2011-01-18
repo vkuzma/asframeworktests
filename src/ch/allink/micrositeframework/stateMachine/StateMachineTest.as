@@ -5,8 +5,10 @@ import ch.allink.jobservice.JobEvent;
 import ch.allink.jobservice.JobService;
 import ch.allink.jobservice.State;
 import ch.allink.jobservice.StateMachine;
+import ch.allink.microsite.util.ReportService;
 
 import org.flexunit.asserts.assertEquals;
+import org.flexunit.async.Async;
 
 /**
  * @author vkuzma
@@ -20,12 +22,13 @@ public class StateMachineTest
 	//
 	//-------------------------------------------------------------------------
 	
-	private var counter:int
+	private var string:String
 	
 	private var galleryState:State
 	private var pageState:State
 	private var homeState:State
-	private var headLineState:State
+	private var subPageState:State
+	private var headLine:State
 	private var stateMachine:StateMachine
 	
 	//-------------------------------------------------------------------------
@@ -38,78 +41,161 @@ public class StateMachineTest
 	 * The statemachine tries to move from state homeState to galleryState.
 	 * The transition ist just one job. The count result should be 1.
 	 **/
-	[Test]
+	[Test(order=1, async, timeout="100")]
 	public function moveToState_01():void
 	{
 		stateMachine.currentState = homeState
-		counter = 0
+			
+		var asyncCompleteHandler:Function = Async.asyncHandler(
+			this, moveTo_01_completeAllHandler, 100)
+			
 		stateMachine.addEventListener(JobEvent.COMPLETE_ALL, 
-									  moveTo_01_completeAllHandler)
+			asyncCompleteHandler, false, 0, true)
 		stateMachine.moveToState(galleryState)
 	}
 	
-	[Test]
-	public function moveToState_02():void
+	[Test(order=2)]
+	public function moveToStateAndMoveBack():void
+	{
+		stateMachine.currentState = homeState
+		stateMachine.moveToState(galleryState)
+		assertEquals("a", string)
+		stateMachine.moveToState(homeState)
+		assertEquals("abc", string)
+	}
+	
+	[Test(order=3)]
+	public function moveToStateOverStates_01():void
 	{
 		stateMachine.currentState = galleryState
-		counter = 0
-		stateMachine.addEventListener(JobEvent.COMPLETE,
-									  moveTo_02_completeHandler)
-		stateMachine.addEventListener(JobEvent.COMPLETE_ALL,
-									  moveTo_02_completeAllHandler)
+		stateMachine.moveToState(pageState)
+		assertEquals("bcdef", string)
+	}
+	
+	[Test(order=4)]
+	public function moveToStateOverStates_02():void
+	{
+		stateMachine.currentState = galleryState
+		stateMachine.moveToState(subPageState)
+		assertEquals("bcdefgh", string)
+	}
+	
+	[Test(order=5)]
+	public function moveToStateOverStates_03():void
+	{
+		stateMachine.currentState = galleryState
+		stateMachine.moveToState(subPageState)
 		stateMachine.moveToState(homeState)
-		
-		
+		assertEquals("bcdefghklij", string)
+	}
+	
+	[Test(order=5)]
+	public function moveToStateOverStates_04():void
+	{
+		stateMachine.currentState = subPageState
+		stateMachine.moveToState(headLine)
+		assertEquals("klijm", string)
 	}
 	
 	[Before]
 	public function initialize():void
 	{
-		counter = 0
+		string = ""
 		
 		homeState = new State()
 		homeState.name = "homeState"
 		galleryState = new State()
 		galleryState.name = "galleryState"
 		pageState = new State()
-		headLineState = new State()
-			
+		pageState.name = "pageState"
+		subPageState = new State()
+		subPageState.name = "subPageState"
+		headLine = new State()
+		headLine.name = "headLine"
 			
 		//gallery
-		var homeGalleryTransition:JobService = new JobService()
-		homeGalleryTransition.name = "homeGallery"
-		homeGalleryTransition.addJob(new Job(jobFunction, 
-									 {params: [1, homeGalleryTransition]}))
-			
-		homeGalleryTransition.beginning = homeState
-		homeGalleryTransition.destination = galleryState
-			
-		//home
 		var galleryHomeTransition:JobService = new JobService()
 		galleryHomeTransition.name = "galleryHome"
 		galleryHomeTransition.addJob(new Job(jobFunction, 
-									 {params: [1, galleryHomeTransition]}))
+									 {params: ["b", galleryHomeTransition]}))
 		galleryHomeTransition.addJob(new Job(jobFunction, 
-									 {params: [2, galleryHomeTransition]}))
+									 {params: ["c", galleryHomeTransition]}))
 			
 		galleryHomeTransition.beginning = galleryState
 		galleryHomeTransition.destination = homeState
+			
+		//home
+		var homeGalleryTransition:JobService = new JobService()
+		homeGalleryTransition.name = "homeGallery"
+		homeGalleryTransition.addJob(new Job(jobFunction, 
+									 {params: ["a", homeGalleryTransition]}))
+			
+		homeGalleryTransition.beginning = homeState
+		homeGalleryTransition.destination = galleryState
 		
+		var homePageTransition:JobService = new JobService()
+		homePageTransition.name = "homePage"
+		homePageTransition.addJob(new Job(jobFunction, 
+									 	  {params: ["d", homePageTransition]}))
+		homePageTransition.addJob(new Job(jobFunction, 
+									   	  {params: ["e", homePageTransition]}))
+		homePageTransition.addJob(new Job(jobFunction, 
+									 	  {params: ["f", homePageTransition]}))
+			
+		homePageTransition.beginning = homeState
+		homePageTransition.destination = pageState
+			
+		var homeHeadLineTransition:JobService = new JobService()
+		homeHeadLineTransition.name = "homeHeadLine"
+		homeHeadLineTransition.addJob(new Job(jobFunction, 
+									 {params: ["m", homeHeadLineTransition]}))
+			
+		homeHeadLineTransition.beginning = homeState
+		homeHeadLineTransition.destination = headLine
+			
+		homePageTransition.beginning = homeState
+		homePageTransition.destination = pageState
+			
 		//page
-		var pageJobService:JobService = new JobService()
-		pageJobService.addJob(new Job(jobFunction, 
-									 {params: [pageJobService]}))
-		pageJobService.addJob(new Job(jobFunction, 
-									 {params: [pageJobService]}))
+		var pageSubPageTransition:JobService = new JobService()
+		pageSubPageTransition.name = "pageSubpage"
+		pageSubPageTransition.addJob(new Job(jobFunction,
+										{params: ["g", pageSubPageTransition]}))
+		pageSubPageTransition.addJob(new Job(jobFunction,
+										{params: ["h", pageSubPageTransition]}))
+		
+		pageSubPageTransition.beginning = pageState
+		pageSubPageTransition.destination = subPageState
+		
+		var pageHomeTransition:JobService = new JobService()
+		pageHomeTransition.name = "pageHome"
+		pageHomeTransition.addJob(new Job(jobFunction,
+										{params: ["i", pageHomeTransition]}))
+		pageHomeTransition.addJob(new Job(jobFunction,
+										{params: ["j", pageHomeTransition]}))
+		
+		pageHomeTransition.beginning = pageState
+		pageHomeTransition.destination = homeState
 			
-		//headline
-			
+		//subpage
+		var subPagePageTransition:JobService = new JobService()
+		subPagePageTransition.name = "subpagePage"
+		subPagePageTransition.addJob(new Job(jobFunction,
+									 {params: ["k", subPagePageTransition]}))
+		subPagePageTransition.addJob(new Job(jobFunction,
+									 {params: ["l", subPagePageTransition]}))
+		
+		subPagePageTransition.beginning = subPageState
+		subPagePageTransition.destination = pageState
 			
 		stateMachine = new StateMachine()
 		stateMachine.addState(galleryState)
 		stateMachine.addState(homeState)
 		stateMachine.addState(pageState)
-		stateMachine.addState(headLineState)
+		stateMachine.addState(subPageState)
+		stateMachine.addState(headLine)
+			
+//		ReportService.enableReportByObject(stateMachine)
 	}
 	
 	//-------------------------------------------------------------------------
@@ -118,10 +204,10 @@ public class StateMachineTest
 	//
 	//-------------------------------------------------------------------------
 	
-	private function jobFunction(addToCounter:int,
+	private function jobFunction(sign:String,
 								 jobServiceInLead:JobService = null):void
 	{
-		counter += addToCounter
+		string += sign
 		jobServiceInLead.doNextJob()
 	}
 	
@@ -131,36 +217,12 @@ public class StateMachineTest
 	//
 	//-------------------------------------------------------------------------
 	
-	private function moveTo_01_completeAllHandler(event:JobEvent):void
+	private function moveTo_01_completeAllHandler(event:JobEvent,
+												  passThroughData:Object):void
 	{
 		var stateMachine:StateMachine = event.target as StateMachine
-		stateMachine.removeEventListener(JobEvent.COMPLETE_ALL, 
-										 moveTo_01_completeAllHandler)
 		assertEquals(galleryState, stateMachine.currentState)	
-		assertEquals(counter, 1)
+		assertEquals("a", string)
 	}
-	
-	private function moveTo_02_completeHandler(event:JobEvent):void
-	{
-	}
-	
-	private function moveTo_02_completeAllHandler(event:JobEvent):void
-	{
-		var stateMachine:StateMachine = event.target as StateMachine
-		stateMachine.removeEventListener(JobEvent.COMPLETE, 
-										 moveTo_02_completeHandler)
-		stateMachine.removeEventListener(JobEvent.COMPLETE_ALL, 
-										 moveTo_02_completeAllHandler)
-		assertEquals(homeState, stateMachine.currentState)
-		assertEquals(counter, 3)
-	}
-	
-	//-------------------------------------------------------------------------
-	//
-	//	Properties
-	//
-	//-------------------------------------------------------------------------
-	
-	
 }
 }
